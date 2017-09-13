@@ -33,7 +33,7 @@
    			 transition-duration: 0.4s;
 		}
 		button:hover{
-			background: green;
+			background: #39ac73;
 			color:white;
 			border-radius: 0px;
 			border: 2px solid #c2f0c2;
