@@ -7,38 +7,47 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sign-in</title>
+<style>
+#header{
+	text-align:center;
+	background-color:#002e4d;
+	color:white;
+}
+
+</style>
 </head>
-<body class="col-md-offset-1">
-<h1> Sign in</h1>
-<div class="row">
-	<div class="col-md-offset-1 col-md-6" style="background-color:lightblue;padding:15px">
-		<form>
-		    <div class="input-group" >
-		      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> Email address:</span>
-		      <input id="email" type="text" class="form-control" name="email" placeholder="Email">
-		    </div>
-		    <div class="input-group" >
-		      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Password:</span>
-		      <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-		    </div>
-		    <div class="row col-md-offset-4">
-		    <br>
-		    	<button type="submit" class="btn btn-success" style="height: 40px;width:200px">Login</button>
-		    </div>
-
-		    
-		  </form>
-		  
+<body>
+	<div class="jumbotron" id="header">
+		<h1>Login with your email</h1>
+		<p></p>
 	</div>
-
-	
-</div>
-<div class="row">
-	<div class="col-md-offset-1">
-		<a href="">Forgot Password?</a> <a href="">Register user</a>
+	<div class="container col-md-offset-3">
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6" style="padding:15px">
+				<form>
+					<div class="row">
+					    <div class="input-group" >
+					      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> Email address:</span>
+					      <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+					    </div>
+					    <div class="input-group" >
+					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Password:</span>
+					      <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+					    </div>
+				    </div>
+				    <div class="row col-md-offset-4">
+				    <br>
+				    	<button type="submit" class="btn btn-success" style="height: 40px;width:200px">Login</button>
+				    </div>		    
+				  </form>  
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-3" id="links">
+				<a href="">Forgot Password?</a> <a href="">Register user</a>
+			</div>
+		</div>
+		
 	</div>
-	
-</div>
-
 </body>
 </html>
