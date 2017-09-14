@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Achievement {
 	private int achievementId;
+	private String approverComment;
 	private int approverPointVal;
 	private String statusCode;
 	private String categoryId;
@@ -25,6 +26,14 @@ public class Achievement {
 	public void setAchievementId(int achievementId) {
 		this.achievementId = achievementId;
 	}
+
+	public String getApproverComment() {
+		return approverComment;
+	}
+
+	public void setApproverComment(String approverComment) {
+		this.approverComment = approverComment;
+	}	
 
 	public int getApproverPointVal() {
 		return approverPointVal;
