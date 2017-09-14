@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserManager {
 	public User findUserByMailId(String emailId) {
 		// TODO Auto-generated method stub
 		User user = new User();
-		String query = "SELECT * from TA_USERS where EMAIL_ADDRESS='" + emailId;
+		String query = "SELECT * from TA_USERS where EMAIL_ADDRESS='" + emailId + "'";
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
 		while(srs.next()){
 			
