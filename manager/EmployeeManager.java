@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.ibm.achievement.dao.model.Employee;
 import com.ibm.achievement.dao.model.EmployeeUserProject;
+import com.ibm.achievement.dao.model.Project;
 
 public interface EmployeeManager {
 	public List<Employee> findByManagerFlag();
 	public Employee findEmployeeByMailId(String emailId);
-	public void findAllEmployee();
+	public List<Employee> findAllEmployee();
 	public List<EmployeeUserProject> findEmployeeByActiveFlg(String activeFlag);
-	public void findProjectByEmpId();
+	public Project findProjectByEmpId(String employeeId);
 	public Employee findEmployeeById(String employeeId);
 	public void updateEmployeeData();
 	public void insertEmployeeData(String employeeId, String emailID, String firstName, String lastName, String managerId, String managerFlag);
