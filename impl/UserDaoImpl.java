@@ -11,6 +11,11 @@ import com.ibm.achievement.dao.model.User;
 
 public class UserDaoImpl implements UserManager {
 	private JdbcTemplate jdbcTemplate;
+	
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+	
 	@Override
 	public User findUserByMailId(String emailId) {
 		// TODO Auto-generated method stub
