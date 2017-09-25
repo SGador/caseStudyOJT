@@ -198,8 +198,8 @@
 									Documents:
 								</td>
 								<td class="col-md-6">
-									<input type="file" id="myFile">
-									<input type="file" id="myFile">
+									<input type="file" id="myFile1">
+									<input type="file" id="myFile2">
 								</td>
 							</tr>
 							<tr>
