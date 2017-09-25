@@ -209,7 +209,7 @@
 							<tr>
 							<td></td>
 							<td class="col-md-6">
-									 <button type="button" class="btn btn-default btn-lg">Reset</button>   
+									 <button type="reset" class="btn btn-default btn-lg">Reset</button>   
 									 <button type="button" class="btn btn-default btn-lg">Submit</button>   
 							</td>
 							</tr>		
