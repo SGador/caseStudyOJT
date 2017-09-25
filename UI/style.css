@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+.input-group {
+   /*min-width:150px;// if you want width please write here // */
+}
+
+.jumbotron {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+}
+
+/* .col-md-3 {
+	font-family:Verdana;
+	font-size:15px;
+} */
+.thick {
+	/* font-weight:bold; */
+	font-size:14px;
+}
+
+.form-group-required {
+	color:red;
+}
