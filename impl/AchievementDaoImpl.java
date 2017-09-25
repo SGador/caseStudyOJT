@@ -1,8 +1,11 @@
 package com.ibm.achievement.dao.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import com.ibm.achievement.dao.manager.AchievementManager;
 import com.ibm.achievement.dao.model.Achievement;
@@ -59,10 +62,26 @@ public class AchievementDaoImpl implements AchievementManager {
 	}
 
 	@Override
-	public List<Achievement> findAchievementByEmpId(String employeeId) {
-		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`,  `CATEGORY_ID`, `FROM `ta_achievement` WHERE `EMPLOYEE_ID` = ?";
-		/* Learn foreign key for AchievementDocs*/
-		return null;
+	public List<Achievement> findAchievementByEmpId(String employeeId) throws SQLException {
+		/* Unsure of AchievementDoc process */
+		String sql = "SELECT ta_achievement.`ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`,  `CATEGORY_ID`, ta_achievement_documents.`DOCUMENT_ID`, ta_achievement_documents.`DOCUMENT_CONTENT` FROM `ta_achievement` INNER JOIN `ta_achievement_documents` ON ta_achievement.`ACHIEVEMENT_ID` = ta_achievement_documents.`ACHIEVEMENT_ID` WHERE `EMPLOYEE_ID` = ?";
+		List<Achievement> achievementList = new ArrayList<Achievement>();
+		ResultSetWrappingSqlRowSet srs = (ResultSetWrappingSqlRowSet) jdbcTemplate.queryForRowSet(sql, new Object[] {employeeId});
+		while(srs.next()) {
+			Achievement achievement = new Achievement();
+			AchievementDoc achievementDoc = new AchievementDoc();
+			achievement.setAchievementId(srs.getInt(0));
+			achievement.setApproverComment(srs.getString(1));
+			achievement.setApproverPointVal(srs.getInt(2));
+			achievement.setStatusCode(srs.getString(3));
+			achievement.setCategoryId(srs.getString(4));
+			achievementDoc.setAchievementId(srs.getInt(0));
+			achievementDoc.setDocumentId(srs.getInt(5));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.getAchievementDoc().add(achievementDoc);
+			achievementList.add(achievement);
+		}
+		return achievementList;
 	}
 
 	@Override
@@ -78,10 +97,26 @@ public class AchievementDaoImpl implements AchievementManager {
 	}
 
 	@Override
-	public List<Achievement> findAchievementByApproverId(String approverId) {
-		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`, `CATEGORY_ID` FROM `ta_achievement` WHERE `";
-		/* Learn foreign key sql syntax for approverId */
-		return null;
+	public List<Achievement> findAchievementByApproverId(String approverId) throws SQLException {
+		/* Not sure with AchievementDoc process */
+		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`, `CATEGORY_ID`, ta_achievement_documents.`DOCUMENT_ID`, ta_achievement_documents.`DOCUMENT_CONTENT`FROM `ta_achievement` INNER JOIN `ta_employee_detail`, `ta_achievement_documents` ON ta_achievement.`APPROVER_ID` = ta_employee_detail.`EMPLOYEE_ID` AND ta_achievement.`ACHIEVEMENT_ID` = ta_achievement_documents.`ACHIEVEMENT_ID` WHERE ta_achievement.`APPROVER_ID` = ?";
+		List<Achievement> achievementList = new ArrayList<Achievement>();
+		ResultSetWrappingSqlRowSet srs = (ResultSetWrappingSqlRowSet) jdbcTemplate.queryForRowSet(sql, new Object[] {approverId});
+		while(srs.next()) {
+			Achievement achievement = new Achievement();
+			AchievementDoc achievementDoc = new AchievementDoc();
+			achievement.setAchievementId(srs.getInt(0));
+			achievement.setApproverComment(srs.getString(1));
+			achievement.setApproverPointVal(srs.getInt(2));
+			achievement.setStatusCode(srs.getString(3));
+			achievement.setCategoryId(srs.getString(4));
+			achievementDoc.setAchievementId(srs.getInt(0));
+			achievementDoc.setDocumentId(srs.getInt(5));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.getAchievementDoc().add(achievementDoc);
+			achievementList.add(achievement);
+		}
+		return achievementList;
 	}
 
 	@Override
@@ -107,7 +142,7 @@ public class AchievementDaoImpl implements AchievementManager {
 
 	@Override
 	public AchievementCount findAchievementCountById(String employeeId) {
-		String sql = "SELECT ";
+		String sql = "SELECT EMPLOYEE_ID, ";
 		/* Wala ko kasabot ani nga method. Please elaborate further. */
 		return null;
 	}
