@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ibm.achievement.dao.manager.EmployeeManager;
 import com.ibm.achievement.dao.model.Employee;
@@ -12,7 +13,7 @@ import com.ibm.achievement.dao.model.EmployeeUserProject;
 import com.ibm.achievement.dao.model.Project;
 import com.ibm.achievement.dao.model.User;
 import com.ibm.achievement.entity.ProjectVO;
-
+@Transactional
 public class EmployeeDaoImpl implements EmployeeManager {
 	private JdbcTemplate jdbcTemplate;
 	
