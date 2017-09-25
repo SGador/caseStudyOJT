@@ -1,99 +1,151 @@
 package com.ibm.achievement.dao.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
-import com.ibm.achievement.dao.manager.UserManager;
-import com.ibm.achievement.dao.model.User;
+
+import com.ibm.achievement.dao.manager.AchievementManager;
+import com.ibm.achievement.dao.model.Achievement;
+import com.ibm.achievement.dao.model.AchievementCatg;
+import com.ibm.achievement.dao.model.AchievementCount;
+import com.ibm.achievement.dao.model.AchievementDoc;
+import com.ibm.achievement.dao.model.AchievementType;
 
 @Transactional
-public class UserDaoImpl implements UserManager {
+public class AchievementDaoImpl implements AchievementManager {
 	private JdbcTemplate jdbcTemplate;
-	
+
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
+
 	@Override
-	public User findUserByMailId(String emailId) {
-		User user = new User();
-		String query = "SELECT * from TA_USERS where EMAIL_ADDRESS='" + emailId + "'";
-		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
+	public List<AchievementType> findAllAchievementType() {
+		String sql = "SELECT * FROM `ta_achievement_type`";
+		List<AchievementType> achievementTypeList = new ArrayList<AchievementType>();
+		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql);
 		while(srs.next()){
-			user.setEmailId(srs.getString(1));
-			user.setPasswd(srs.getString(2));
-			user.setActivFlg(srs.getString(3));
-			user.setRole(srs.getString(4));
+			AchievementType achievementType = new AchievementType();
+			achievementType.setTypeId(srs.getString(0));
+			achievementType.setDescription(srs.getString(1));
+			achievementTypeList.add(achievementType);
 		}
-		return user;
+		return achievementTypeList;
 	}
 
 	@Override
-	public List<User> findUserByActiveFlg(String activeFlag) {
-		User user;
-		List<User> userList = new ArrayList<User>();
-		String query = "SELECT * FROM TA_USERS WHERE ACTIVE_FLAG='" + activeFlag +"'";
-		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
-		while(srs.next()){
-			user = new User();
-			user.setEmailId(srs.getString(1));
-			user.setPasswd(srs.getString(2));
-			user.setActivFlg(srs.getString(3));
-			user.setRole(srs.getString(4));
-			userList.add(user);
+	public AchievementType findAchievementType(String typeId) {
+		String sql = "SELECT * FROM `ta_achievement_type` WHERE `TYPE_ID` = ?";
+		AchievementType achievementType = new AchievementType();
+		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {typeId});
+		while(srs.next()) {
+			achievementType.setTypeId(srs.getString(0));
+			achievementType.setDescription(srs.getString(1));
 		}
-		return userList;
+		return achievementType;
 	}
 
 	@Override
-	public List<User> findAllUser() {
-		User user;
-		List<User> userList = new ArrayList<User>();
-		String query = "SELECT * FROM TA_USERS";
-		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
-		while(srs.next()){
-			user = new User();
-			user.setEmailId(srs.getString(1));
-			user.setPasswd(srs.getString(2));
-			user.setActivFlg(srs.getString(3));
-			user.setRole(srs.getString(4));
-			userList.add(user);
+	public List<AchievementCatg> findAllAchievementCatg() {
+		String sql = "SELECT * FROM `ta_achievement_category`";
+		List<AchievementCatg> achievementCatgList = new ArrayList<AchievementCatg>();
+		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql);
+		while(srs.next()) {
+			AchievementCatg achievementCatg = new AchievementCatg();
+			achievementCatg.setCategoryId(srs.getString(0));
+			achievementCatg.setDescription(srs.getString(1));
+			achievementCatgList.add(achievementCatg);
 		}
-		return userList;
+		return achievementCatgList;
 	}
 
 	@Override
-	public int updateActiveFlag(String emailId, String activeFlag) {
-		String query = "UPDATE TA_USERS SET ACTIVE_FLAG='" + activeFlag +"' WHERE EMAIL_ADDRESS='" + emailId + "'";
-		return jdbcTemplate.update(query);
+	public List<Achievement> findAchievementByEmpId(String employeeId) throws SQLException {
+		/* Unsure of AchievementDoc process */
+		String sql = "SELECT ta_achievement.`ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`,  `CATEGORY_ID`, ta_achievement_documents.`DOCUMENT_ID`, ta_achievement_documents.`DOCUMENT_CONTENT` FROM `ta_achievement` INNER JOIN `ta_achievement_documents` ON ta_achievement.`ACHIEVEMENT_ID` = ta_achievement_documents.`ACHIEVEMENT_ID` WHERE `EMPLOYEE_ID` = ?";
+		List<Achievement> achievementList = new ArrayList<Achievement>();
+		ResultSetWrappingSqlRowSet srs = (ResultSetWrappingSqlRowSet) jdbcTemplate.queryForRowSet(sql, new Object[] {employeeId});
+		while(srs.next()) {
+			Achievement achievement = new Achievement();
+			AchievementDoc achievementDoc = new AchievementDoc();
+			achievement.setAchievementId(srs.getInt(0));
+			achievement.setApproverComment(srs.getString(1));
+			achievement.setApproverPointVal(srs.getInt(2));
+			achievement.setStatusCode(srs.getString(3));
+			achievement.setCategoryId(srs.getString(4));
+			achievementDoc.setAchievementId(srs.getInt(0));
+			achievementDoc.setDocumentId(srs.getInt(5));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.getAchievementDoc().add(achievementDoc);
+			achievementList.add(achievement);
+		}
+		return achievementList;
 	}
 
 	@Override
-	public boolean insertUserData(String emailId, String password, String activeFlag, String userRole) {
-		String query = "INSERT INTO TA_USERS(EMAIL_ADDRESS,PASSWORD,ACTIVE_FLAG,USER_ROLE) VALUES('" + emailId + "','" + 
-				password + "','" + activeFlag + "','" + userRole + "')";
-		try{
-			jdbcTemplate.update(query);
-			return true;
-		}
-		catch(Exception e){
-			return false;
-		}
-		
+	public int saveAchievement(Achievement achievement) {
+		String sql = "INSERT INTO `ta_achievement` (`STATUS_CODE`, `APPROVER_COMMENT_TEXT`, `CATEGORY_ID`, `APPROVER_POINT_VAL`) VALUES (?,?,?,?)";
+		return jdbcTemplate.update(sql, new Object[] {achievement.getStatusCode(), achievement.getApproverComment(), achievement.getCategoryId(), achievement.getApproverPointVal()});
 	}
 
 	@Override
-	public boolean deleteUserData(String emailId) {
-		String query = "DELETE FROM TA_USERS WHERE EMAIL_ADDRESS='" + emailId + "'";
-		try{
-			jdbcTemplate.update(query);
-			return true;
-		}
-		catch(Exception e){
-			return false;
-		}
+	public int updateAchievement(Achievement achievement) {
+		String sql = "UPDATE `ta_achievement` SET `STATUS_CODE` = ?, `APPROVER_COMMENT_TEXT` = ?, `CATEGORY_ID` = ?, `APPROVER_POINT_VAL` = ? WHERE `ACHIEVEMENT_ID` = ?";
+		return jdbcTemplate.update(sql, new Object[] {achievement.getStatusCode(), achievement.getApproverComment(), achievement.getCategoryId(), achievement.getApproverPointVal()});
 	}
 
+	@Override
+	public List<Achievement> findAchievementByApproverId(String approverId) throws SQLException {
+		/* Not sure with AchievementDoc process */
+		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`, `CATEGORY_ID`, ta_achievement_documents.`DOCUMENT_ID`, ta_achievement_documents.`DOCUMENT_CONTENT`FROM `ta_achievement` INNER JOIN `ta_employee_detail`, `ta_achievement_documents` ON ta_achievement.`APPROVER_ID` = ta_employee_detail.`EMPLOYEE_ID` AND ta_achievement.`ACHIEVEMENT_ID` = ta_achievement_documents.`ACHIEVEMENT_ID` WHERE ta_achievement.`APPROVER_ID` = ?";
+		List<Achievement> achievementList = new ArrayList<Achievement>();
+		ResultSetWrappingSqlRowSet srs = (ResultSetWrappingSqlRowSet) jdbcTemplate.queryForRowSet(sql, new Object[] {approverId});
+		while(srs.next()) {
+			Achievement achievement = new Achievement();
+			AchievementDoc achievementDoc = new AchievementDoc();
+			achievement.setAchievementId(srs.getInt(0));
+			achievement.setApproverComment(srs.getString(1));
+			achievement.setApproverPointVal(srs.getInt(2));
+			achievement.setStatusCode(srs.getString(3));
+			achievement.setCategoryId(srs.getString(4));
+			achievementDoc.setAchievementId(srs.getInt(0));
+			achievementDoc.setDocumentId(srs.getInt(5));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.getAchievementDoc().add(achievementDoc);
+			achievementList.add(achievement);
+		}
+		return achievementList;
+	}
+
+	@Override
+	public Achievement findAchievementById(int achievementId) {
+		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`, `CATEGORY_ID` FROM `ta_achievement` WHERE `ACHIEVEMENT_ID` = ?";
+		Achievement achievement = new Achievement();
+		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {achievementId});
+		while(srs.next()) {
+			achievement.setAchievementId(achievementId);
+			achievement.setApproverComment(srs.getString(1));
+			achievement.setApproverPointVal(srs.getInt(2));
+			achievement.setStatusCode(srs.getString(3));
+			achievement.setCategoryId(srs.getString(4));
+		}
+		return achievement;
+	}
+
+	@Override
+	public void saveAchievementDoc(AchievementDoc doc) {
+		String sql = "INSERT INTO `ta_achievement_documents` (`ACHIEVEMENT_ID`, `DOCUMENT_CONTENT`) VALUES (?,?)";
+		jdbcTemplate.update(sql, new Object[] {doc.getAchievementId(), doc.getDocumentContent()});
+	}
+
+	@Override
+	public AchievementCount findAchievementCountById(String employeeId) {
+		String sql = "SELECT EMPLOYEE_ID, ";
+		/* Wala ko kasabot ani nga method. Please elaborate further. */
+		return null;
+	}
 }
