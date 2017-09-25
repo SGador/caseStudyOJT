@@ -12,10 +12,10 @@ public interface AchievementManager {
 	public List<AchievementType> findAllAchievementType();
 	public AchievementType findAchievementType(String typeId);
 	public List<AchievementCatg> findAllAchievementCatg();
-	public List<Achievement> findAchievementByEmpId(String employeeId);
+	public List<Achievement> findAchievementByEmpId(String employeeId) throws SQLException;
 	public int saveAchievement(Achievement achievement);
 	public int updateAchievement(Achievement achievement);
-	public List<Achievement> findAchievementByApproverId(String approverId);
+	public List<Achievement> findAchievementByApproverId(String approverId) throws SQLException;
 	public Achievement findAchievementById(int achievementId);
 	public void saveAchievementDoc(AchievementDoc doc);
 	public AchievementCount findAchievementCountById(String employeeId);
