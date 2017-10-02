@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import com.ibm.achievement.dao.ProjectDAO;
 import com.ibm.achievement.dao.model.Project;
 
-@Transactional
+@Repository
 public class ProjectDaoImpl implements ProjectDAO {
 	private JdbcTemplate jdbcTemplate;
 	@Override

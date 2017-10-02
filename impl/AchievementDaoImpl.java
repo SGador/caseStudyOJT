@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import com.ibm.achievement.dao.AchievementDAO;
 import com.ibm.achievement.dao.model.Achievement;
@@ -15,7 +15,7 @@ import com.ibm.achievement.dao.model.AchievementCount;
 import com.ibm.achievement.dao.model.AchievementDoc;
 import com.ibm.achievement.dao.model.AchievementType;
 
-@Transactional
+@Repository
 public class AchievementDaoImpl implements AchievementDAO {
 	private JdbcTemplate jdbcTemplate;
 

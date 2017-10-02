@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import com.ibm.achievement.dao.UserDAO;
 import com.ibm.achievement.dao.model.User;
 
-@Transactional
+@Repository
 public class UserDaoImpl implements UserDAO {
 	private JdbcTemplate jdbcTemplate;
 	
