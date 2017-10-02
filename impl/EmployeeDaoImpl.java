@@ -7,14 +7,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.achievement.dao.manager.EmployeeManager;
+import com.ibm.achievement.dao.EmployeeDAO;
 import com.ibm.achievement.dao.model.Employee;
 import com.ibm.achievement.dao.model.EmployeeUserProject;
 import com.ibm.achievement.dao.model.Project;
-import com.ibm.achievement.dao.model.User;
-import com.ibm.achievement.entity.ProjectVO;
+
 @Transactional
-public class EmployeeDaoImpl implements EmployeeManager {
+public class EmployeeDaoImpl implements EmployeeDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
@@ -140,13 +139,6 @@ public class EmployeeDaoImpl implements EmployeeManager {
 	}
 
 	@Override
-	public void updateEmployeeData() {
-		// TODO Auto-generated method stub
-		//SKIPPED coz next case study pa ni
-
-	}
-
-	@Override
 	public void insertEmployeeData(String employeeId, String emailID, String firstName, String lastName,
 			String managerId, String managerFlag) {
 		// TODO Auto-generated method stub
@@ -154,13 +146,7 @@ public class EmployeeDaoImpl implements EmployeeManager {
 				+ "VALUES('" + employeeId + "','" + emailID + "','" + firstName + "','" + lastName + "','" + managerId + "','" + managerFlag + "')";
 		jdbcTemplate.update(query);
 	}
-
-	@Override
-	public void deleteEmployeeData() {
-		// TODO Auto-generated method stub
-		//SKIPPED
-	}
-
+	
 	@Override
 	public List<Employee> findEmployees(String emailID, String firstName, String lastName, String managerFlag) {
 		// TODO Auto-generated method stub
@@ -180,5 +166,14 @@ public class EmployeeDaoImpl implements EmployeeManager {
 			employeeList.add(employee);
 		}
 		return employeeList;
+	}
+
+	@Override
+	public void deleteEmployeeData(String empId) {
+	}
+
+	@Override
+	public void updateEmployeeData(String empId, String emailID, String firstName, String lastName, String managerId,
+			String managerFlag) {
 	}
 }

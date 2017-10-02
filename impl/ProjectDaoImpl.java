@@ -1,24 +1,20 @@
 package com.ibm.achievement.dao.impl;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.achievement.dao.manager.ProjectManager;
-import com.ibm.achievement.dao.model.Employee;
+import com.ibm.achievement.dao.ProjectDAO;
 import com.ibm.achievement.dao.model.Project;
 
 @Transactional
-public class ProjectDaoImpl implements ProjectManager {
+public class ProjectDaoImpl implements ProjectDAO {
 	private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Project> findAllProject() {
-		// TODO Auto-generated method stub
 		Project project;
 		List<Project> projectList = new ArrayList<Project>();
 		String query = "SELECT * FROM TA_PROJECTS";
@@ -54,13 +50,8 @@ public class ProjectDaoImpl implements ProjectManager {
 	@Override
 	public void insertEmpProject(String projectID, String employeeId) {
 		// TODO Auto-generated method stub
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		Date date = new Date(today.getTimeInMillis()); 
-		
-		
-		String query="INSERT INTO TA_EMPLOYEE_PROJECT(PROJECT_ID,EMPLOYEE_ID,START_DATE) VALUES(?,?,?)";
-		jdbcTemplate.update(query,new Object[]{projectID,employeeId,date});
+		String query="INSERT INTO TA_EMPLOYEE_PROJECT(PROJECT_ID,EMPLOYEE_ID) VALUES('" + projectID + "','" + employeeId +"')";
+		jdbcTemplate.update(query);
 	}
 
 	@Override

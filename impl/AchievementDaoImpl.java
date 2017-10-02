@@ -8,7 +8,7 @@ import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.achievement.dao.manager.AchievementManager;
+import com.ibm.achievement.dao.AchievementDAO;
 import com.ibm.achievement.dao.model.Achievement;
 import com.ibm.achievement.dao.model.AchievementCatg;
 import com.ibm.achievement.dao.model.AchievementCount;
@@ -16,7 +16,7 @@ import com.ibm.achievement.dao.model.AchievementDoc;
 import com.ibm.achievement.dao.model.AchievementType;
 
 @Transactional
-public class AchievementDaoImpl implements AchievementManager {
+public class AchievementDaoImpl implements AchievementDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -144,8 +144,15 @@ public class AchievementDaoImpl implements AchievementManager {
 
 	@Override
 	public AchievementCount findAchievementCountById(String employeeId) {
-		String sql = "SELECT EMPLOYEE_ID, ";
+		//String sql = "SELECT COUNT(`ACHIEVEMENT_ID`) FROM `ta_achievement` WHERE `EMPLOYEE_ID` = ? AND MONTH(`START_DATE`) = MONTH(CURRENT_DATE()) AND YEAR(`START_DATE`) = YEAR(CURRENT_DATE())";
+		String sql = "SELECT * FROM `ta_achievement` WHERE `EMPLOYEE_ID` = ?";
+		AchievementCount achievementCount = new AchievementCount();
 		/* Wala ko kasabot ani nga method. Please elaborate further. */
+		return achievementCount;
+	}
+
+	@Override
+	public AchievementDoc findAchievementDocById(String achievementId) {
 		return null;
 	}
 }
