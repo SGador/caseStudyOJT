@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ibm.achievement.dao.model.User;
 
@@ -62,11 +63,13 @@ public class UserManager {
 		return userList;
 	}
 
+	@Transactional
 	public int updateActiveFlag(String emailId, String activeFlag) {
 		String query = "UPDATE TA_USERS SET ACTIVE_FLAG='" + activeFlag +"' WHERE EMAIL_ADDRESS='" + emailId + "'";
 		return jdbcTemplate.update(query);
 	}
 
+	@Transactional
 	public boolean insertUserData(String emailId, String password, String activeFlag, String userRole) {
 		String query = "INSERT INTO TA_USERS(EMAIL_ADDRESS,PASSWORD,ACTIVE_FLAG,USER_ROLE) VALUES('" + emailId + "','" + 
 				password + "','" + activeFlag + "','" + userRole + "')";
@@ -80,6 +83,7 @@ public class UserManager {
 		
 	}
 
+	@Transactional
 	public boolean deleteUserData(String emailId) {
 		String query = "DELETE FROM TA_USERS WHERE EMAIL_ADDRESS='" + emailId + "'";
 		try{
