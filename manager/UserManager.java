@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.ibm.achievement.dao.model.User;
 
-@Transactional
+@Component
 public class UserManager {
 	private JdbcTemplate jdbcTemplate;
 	
