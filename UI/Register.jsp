@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,7 +49,7 @@ td{
 		</div>
 		<div class="row col-md-10 col-md-offset-1">
 			<div class="col col-md-12">
-				<form>
+				<form:form method="POST" action="/register">
 					<table class="col-md-offset-1 col-md-10">
 						<tbody>
 							<tr>
@@ -56,14 +57,14 @@ td{
 									Email Address: 
 									<span class="req">*</span>
 								</td>
-								<td colspan="2" class="col-md-9"><input type="text" name="email" placeholder="emailaddress@company.com" class="form-control" required></td>
+								<td colspan="2" class="col-md-9"><form:input type="text" path="emailId" placeholder="emailaddress@company.com" class="form-control" required/></td>
 							</tr>
 							<tr>
 								<td rowspan="2" class="col-md-3">
 									Password:
 									<span class="req">*</span>
 								</td>
-								<td colspan="2"  class="col-md-9"> <input type="password" name="password" placeholder="Password" class="form-control" required></td>
+								<td colspan="2"  class="col-md-9"> <form:input type="password" path="passwd" placeholder="Password" class="form-control" required/></td>
 							</tr>
 							
 							<tr>
@@ -83,21 +84,21 @@ td{
 									First Name:
 									<span class="req">*</span>
 								</td>
-								<td colspan="2" class="col-md-9"> <input type="text" name="fname" placeholder="First Name" class="form-control" required></td>
+								<td colspan="2" class="col-md-9"> <form:input type="text" path="firstName" placeholder="First Name" class="form-control" required/></td>
 							</tr>
 							<tr>
 								<td class="col-md-3">
 									Last Name:
 									<span class="req">*</span>
 								</td>
-								<td colspan="2" class="col-md-9"> <input type="text" name="lname" placeholder="Last Name" class="form-control" required></td>
+								<td colspan="2" class="col-md-9"> <form:input type="text" path="lastName" placeholder="Last Name" class="form-control" required/></td>
 							</tr>
 							<tr>
 								<td class="col-md-3">
 									Employee Id:
 									<span class="req">*</span>
 								</td>
-								<td colspan="2" class="col-md-9"> <input type="text" name="empid" placeholder="Employee ID" class="form-control" required></td>
+								<td colspan="2" class="col-md-9"> <form:input type="text" path="employeeId" placeholder="Employee ID" class="form-control" required/></td>
 							</tr>
 							<tr>
 								<td class="col-md-3">
@@ -105,7 +106,7 @@ td{
 									<span class="req">*</span>
 								</td>
 								<td class="col-md-9"> 
-									<input type="text" name="mgrid" placeholder="Employee ID" class="form-control" required>	
+									<form:input type="text" path="managerId" placeholder="Employee ID" class="form-control" required/>	
 								</td>
 								<td>
 									<button type="button" class="btn btn-primary" name="lookup">Lookup</button>
@@ -116,7 +117,7 @@ td{
 									Projects:
 								</td>
 								<td class="col-md-9">
-									 <select multiple id="projects">
+									<select multiple id="projects">
 									  <option value="Project 1 (IN-234562)">Project 1 (IN-234562)</option>
 									  <option value="Project 2 (IN-234562)">Project 2 (IN-234562)</option>
 									  <option value="Project 3 (IN-234562)">Project 3 (IN-234562)</option>
@@ -132,7 +133,7 @@ td{
 							</tr>
 						</tbody>
 					</table>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>
