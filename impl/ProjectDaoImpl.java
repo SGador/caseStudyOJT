@@ -3,6 +3,7 @@ package com.ibm.achievement.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,9 @@ import com.ibm.achievement.dao.model.Project;
 
 @Repository
 public class ProjectDaoImpl implements ProjectDAO {
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
 	@Override
 	public List<Project> findAllProject() {
 		Project project;
@@ -57,11 +60,11 @@ public class ProjectDaoImpl implements ProjectDAO {
 	@Override
 	public Project findProjectById(String projectId) {
 		// TODO Auto-generated method stub
-		Project project = new Project();
+		Project project = null;
 		String query = "SELECT FROM TA_PROJECTS WHERE PROJECT_ID='" + projectId + "'";
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
 		while(srs.next()){
-			
+			project = new Project();
 			project.setProjectID(srs.getString(1));
 			project.setProjectName(srs.getString(2));
 			project.setManagerID(srs.getString(3));

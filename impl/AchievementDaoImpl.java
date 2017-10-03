@@ -3,6 +3,8 @@ package com.ibm.achievement.dao.impl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.ResultSetWrappingSqlRowSet;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -17,11 +19,8 @@ import com.ibm.achievement.dao.model.AchievementType;
 
 @Repository
 public class AchievementDaoImpl implements AchievementDAO {
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
 	@Override
 	public List<AchievementType> findAllAchievementType() {
@@ -40,9 +39,10 @@ public class AchievementDaoImpl implements AchievementDAO {
 	@Override
 	public AchievementType findAchievementType(String typeId) {
 		String sql = "SELECT * FROM `ta_achievement_type` WHERE `TYPE_ID` = ?";
-		AchievementType achievementType = new AchievementType();
+		AchievementType achievementType = null;
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {typeId});
 		while(srs.next()) {
+			achievementType = new AchievementType();
 			achievementType.setTypeId(srs.getString(0));
 			achievementType.setDescription(srs.getString(1));
 		}
@@ -124,9 +124,10 @@ public class AchievementDaoImpl implements AchievementDAO {
 	@Override
 	public Achievement findAchievementById(int achievementId) {
 		String sql = "SELECT `ACHIEVEMENT_ID`, `APPROVER_COMMENT_TEXT`, `APPROVER_POINT_VAL`, `STATUS_CODE`, `CATEGORY_ID` FROM `ta_achievement` WHERE `ACHIEVEMENT_ID` = ?";
-		Achievement achievement = new Achievement();
+		Achievement achievement = null;
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {achievementId});
 		while(srs.next()) {
+			achievement = new Achievement();
 			achievement.setAchievementId(achievementId);
 			achievement.setApproverComment(srs.getString(1));
 			achievement.setApproverPointVal(srs.getInt(2));

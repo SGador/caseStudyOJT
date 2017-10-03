@@ -3,6 +3,7 @@ package com.ibm.achievement.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import com.ibm.achievement.dao.model.Project;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDAO {
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
@@ -40,12 +42,11 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	@Override
 	public Employee findEmployeeByMailId(String emailId) {
 		// TODO Auto-generated method stub
-		Employee employee = new Employee();
+		Employee employee = null;
 		String query = "SELECT * from TA_EMPLOYEE_DETAIL WHERE EMAIL_ADDRESS='" + emailId + "'";
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
 		while(srs.next()){
-			
-			
+			employee = new Employee();			
 			employee.setEmployeeId(srs.getString(1));
 			employee.setEmailID(srs.getString(2));
 			employee.setFirstName(srs.getString(3));
@@ -121,12 +122,11 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 	@Override
 	public Employee findEmployeeById(String employeeId) {
 		// TODO Auto-generated method stub
-		Employee employee = new Employee();
+		Employee employee = null;
 		String query = "SELECT * from TA_EMPLOYEE_DETAIL WHERE EMPLOYEE_ID='" + employeeId + "'";
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(query);
 		while(srs.next()){
-			
-			
+			employee = new Employee();
 			employee.setEmployeeId(srs.getString(1));
 			employee.setEmailID(srs.getString(2));
 			employee.setFirstName(srs.getString(3));
