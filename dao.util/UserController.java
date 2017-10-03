@@ -1,5 +1,8 @@
 package com.ibm.achievement.dao.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ibm.achievement.bo.UserManagementBO;
+import com.ibm.achievement.dao.model.Employee;
 import com.ibm.achievement.dao.model.User;
 import com.ibm.achievement.exception.AchievementTrackerException;
 
@@ -38,11 +42,24 @@ public class UserController implements ApplicationEventPublisherAware {
 		user.setPasswd(password);
 		UserEvent ue = new UserEvent(this);
 		applicationEventPublisher.publishEvent(ue);
-		if(userManagementBO.isValidUser(email, password) != null) {
-			return "trial";
+		if(userManagementBO.isValidUser(email, password) == null) {
+			return "redirect:register";
 		}
 		else {
-			return "";
+			return "trial";
 		}
+	}
+	
+//	@RequestMapping(value = "/redirectToRegister", method = RequestMethod.GET)
+//	public String redirect() {
+//		return "redirect:register";
+//	}
+//	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register() {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("user", new User());
+		model.put("employee", new Employee());
+		return new ModelAndView("register", "command", new Employee());
 	}
 }
