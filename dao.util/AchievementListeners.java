@@ -1,7 +1,7 @@
 package com.ibm.achievement.dao.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
+//import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import com.ibm.achievement.dao.manager.AchievementManager;
@@ -21,25 +21,21 @@ public class AchievementListeners{
 	@Autowired
 	private UserManager userManager;
 	
-	@EventListener(AchievementEvent.class)
 	public AchievementManager getAchievementManager() {
 		System.out.println("I was here. AM");
 		return achievementManager;
 	}
 	
-	@EventListener(EmployeeEvent.class)
 	public EmployeeManager getEmployeeManager() {
 		System.out.println("I was here. EM");
 		return employeeManager;
 	}
 	
-	@EventListener(ProjectEvent.class)
 	public ProjectManager getProjectManager() {
 		System.out.println("I was here. PM");
 		return projectManager;
 	}
 	
-	@EventListener(UserEvent.class)
 	public UserManager getUserManager() {
 		System.out.println("I was here. UM");
 		return userManager;
