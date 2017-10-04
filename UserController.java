@@ -104,4 +104,55 @@ public class UserController{
 		System.out.println("Registerd value : " + registered);
 		return "registered";
 	}
+	
+	@RequestMapping(value = "/review", method = RequestMethod.GET)
+	public ModelAndView user() throws AchievementTrackerException {
+
+		EmpToApproveForm empToApproveForm = new EmpToApproveForm();
+		try {
+			EmployeeConverter ec = new EmployeeConverter();
+			ec.setEmpToApprove2(userManagementBO.findUserByActiveFlag("N"));
+			ec.convertEmpToApprove2();
+			empToApproveForm.setEmpToApprove(ec.getEmpToApprove());
+
+		} catch (AchievementTrackerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ModelAndView("ReviewUserDetails","empToApproveForm",empToApproveForm);
+	}
+	
+	@RequestMapping(value = "/approve", method = RequestMethod.POST)
+	public ModelAndView approve(@ModelAttribute("empToApproveForm") EmpToApproveForm empToApproveForm) {
+		System.out.println(empToApproveForm);
+		System.out.println(empToApproveForm.getEmpToApprove());
+		List<EmployeeVOChkBox> empToApprove = empToApproveForm.getEmpToApprove();
+
+
+		for(EmployeeVOChkBox emp:empToApprove){
+			if(emp.getCheckControl()){
+				try {
+					userManagementBO.updateUserActiveFlag("Y", emp.getEmailID());
+				} catch (AchievementTrackerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			System.out.println(emp.getFirstName() +" " + emp.getLastName() + " " + emp.getEmployeeId() + " "+ emp.getCheckControl());
+		}
+
+		try {
+			EmployeeConverter ec = new EmployeeConverter();
+			ec.setEmpToApprove2(userManagementBO.findUserByActiveFlag("N"));
+			ec.convertEmpToApprove2();
+			empToApproveForm.setEmpToApprove(ec.getEmpToApprove());
+		} catch (AchievementTrackerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ModelAndView("ReviewUserDetails", "empToApproveForm", empToApproveForm);
+	}
 }
