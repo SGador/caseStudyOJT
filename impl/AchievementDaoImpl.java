@@ -145,10 +145,17 @@ public class AchievementDaoImpl implements AchievementDAO {
 
 	@Override
 	public AchievementCount findAchievementCountById(String employeeId) {
-		//String sql = "SELECT COUNT(`ACHIEVEMENT_ID`) FROM `ta_achievement` WHERE `EMPLOYEE_ID` = ? AND MONTH(`START_DATE`) = MONTH(CURRENT_DATE()) AND YEAR(`START_DATE`) = YEAR(CURRENT_DATE())";
-		String sql = "SELECT * FROM `ta_achievement` WHERE `EMPLOYEE_ID` = ?";
-		AchievementCount achievementCount = new AchievementCount();
-		/* Wala ko kasabot ani nga method. Please elaborate further. */
+		String sql = "SELECT SUM(case when MONTH(START_DATE) = MONTH(CURRENT_DATE()) then 1 else 0 end) AS MONTHCOUNT,\r\n" + 
+				"SUM(case when YEAR(START_DATE) = YEAR(CURRENT_DATE()) then 1 else 0 end) AS YEARCOUNT\r\n" + 
+				"FROM ta_achievement WHERE EMPLOYEE_ID = ?";
+		AchievementCount achievementCount = null;
+		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {employeeId});
+		while(srs.next()) {
+			achievementCount = new AchievementCount();
+			achievementCount.setEmployeeId(employeeId);
+			achievementCount.setCurrentMonthCount(srs.getString(0));
+			achievementCount.setCurrentYearCount(srs.getString(1));
+		}
 		return achievementCount;
 	}
 
