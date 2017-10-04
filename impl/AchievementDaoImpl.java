@@ -29,8 +29,8 @@ public class AchievementDaoImpl implements AchievementDAO {
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql);
 		while(srs.next()){
 			AchievementType achievementType = new AchievementType();
-			achievementType.setTypeId(srs.getString(0));
-			achievementType.setDescription(srs.getString(1));
+			achievementType.setTypeId(srs.getString(1));
+			achievementType.setDescription(srs.getString(2));
 			achievementTypeList.add(achievementType);
 		}
 		return achievementTypeList;
@@ -43,8 +43,8 @@ public class AchievementDaoImpl implements AchievementDAO {
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql, new Object[] {typeId});
 		while(srs.next()) {
 			achievementType = new AchievementType();
-			achievementType.setTypeId(srs.getString(0));
-			achievementType.setDescription(srs.getString(1));
+			achievementType.setTypeId(srs.getString(1));
+			achievementType.setDescription(srs.getString(2));
 		}
 		return achievementType;
 	}
@@ -56,8 +56,8 @@ public class AchievementDaoImpl implements AchievementDAO {
 		SqlRowSet srs = jdbcTemplate.queryForRowSet(sql);
 		while(srs.next()) {
 			AchievementCatg achievementCatg = new AchievementCatg();
-			achievementCatg.setCategoryId(srs.getString(0));
-			achievementCatg.setDescription(srs.getString(1));
+			achievementCatg.setCategoryId(srs.getString(1));
+			achievementCatg.setDescription(srs.getString(2));
 			achievementCatgList.add(achievementCatg);
 		}
 		return achievementCatgList;
@@ -72,14 +72,14 @@ public class AchievementDaoImpl implements AchievementDAO {
 		while(srs.next()) {
 			Achievement achievement = new Achievement();
 			AchievementDoc achievementDoc = new AchievementDoc();
-			achievement.setAchievementId(srs.getInt(0));
-			achievement.setApproverComment(srs.getString(1));
-			achievement.setApproverPointVal(srs.getInt(2));
-			achievement.setStatusCode(srs.getString(3));
-			achievement.setCategoryId(srs.getString(4));
-			achievementDoc.setAchievementId(srs.getInt(0));
-			achievementDoc.setDocumentId(srs.getInt(5));
-			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.setAchievementId(srs.getInt(1));
+			achievement.setApproverComment(srs.getString(2));
+			achievement.setApproverPointVal(srs.getInt(3));
+			achievement.setStatusCode(srs.getString(4));
+			achievement.setCategoryId(srs.getString(5));
+			achievementDoc.setAchievementId(srs.getInt(1));
+			achievementDoc.setDocumentId(srs.getInt(6));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(7));
 			achievement.getAchievementDoc().add(achievementDoc);
 			achievementList.add(achievement);
 		}
@@ -107,14 +107,14 @@ public class AchievementDaoImpl implements AchievementDAO {
 		while(srs.next()) {
 			Achievement achievement = new Achievement();
 			AchievementDoc achievementDoc = new AchievementDoc();
-			achievement.setAchievementId(srs.getInt(0));
-			achievement.setApproverComment(srs.getString(1));
-			achievement.setApproverPointVal(srs.getInt(2));
-			achievement.setStatusCode(srs.getString(3));
-			achievement.setCategoryId(srs.getString(4));
-			achievementDoc.setAchievementId(srs.getInt(0));
-			achievementDoc.setDocumentId(srs.getInt(5));
-			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(6));
+			achievement.setAchievementId(srs.getInt(1));
+			achievement.setApproverComment(srs.getString(2));
+			achievement.setApproverPointVal(srs.getInt(3));
+			achievement.setStatusCode(srs.getString(4));
+			achievement.setCategoryId(srs.getString(5));
+			achievementDoc.setAchievementId(srs.getInt(1));
+			achievementDoc.setDocumentId(srs.getInt(6));
+			achievementDoc.setDocumentContent(srs.getResultSet().getBytes(7));
 			achievement.getAchievementDoc().add(achievementDoc);
 			achievementList.add(achievement);
 		}
@@ -153,8 +153,8 @@ public class AchievementDaoImpl implements AchievementDAO {
 		while(srs.next()) {
 			achievementCount = new AchievementCount();
 			achievementCount.setEmployeeId(employeeId);
-			achievementCount.setCurrentMonthCount(srs.getString(0));
-			achievementCount.setCurrentYearCount(srs.getString(1));
+			achievementCount.setCurrentMonthCount(srs.getString(1));
+			achievementCount.setCurrentYearCount(srs.getString(2));
 		}
 		return achievementCount;
 	}
