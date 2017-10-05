@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,6 +37,10 @@
 		background-color: #4CAF50;
 		color: white;
 	}
+	a:active {
+		background-color:  green;
+		text-decoration: none;
+	}
 	a { 
 		display: block; 
  		padding: 8px; 
@@ -46,11 +51,16 @@
 <body>	
 	<div class="col-md-12 container">
 		<ul>
-			<li><a href="mainPage">Main</a></li>
+			<li><a href="mainPage">Home</a></li>
 			<li><a href="showEnterAchievement">Enter Achievement</a></li>
 			<li><a href="#">List Achievements (Pending Approval)</a></li>
-			<li><a href="#">List Achievements (My Employees)</a></li>
-			<li style="float:right"><a href="login">Log Out</a></li>
+			<c:if test="${role eq 'Manager'}">
+				<li><a href="#">List Achievements (My Employees)</a></li>			
+			</c:if>
+			<c:if test="${role eq 'Admin'}">
+				<li><a href="reviewUserDetails">Review User Details</a></li>
+			</c:if>
+			<li style="float:right"><a href="logout">Log Out</a></li>
 			<li style="float:right"><a>Hello, ${userCredentials.emailId}</a></li>
 		</ul>
 	</div>
