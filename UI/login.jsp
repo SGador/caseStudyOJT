@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +13,7 @@
 <h1> Sign in</h1>
 <div class="row">
 	<div class="col-md-offset-1 col-md-6" style="background-color:lightblue;padding:15px">
-		<form:form method="post" action="/AchievementTrackerService/login" >
+		<form:form method="post" action="/AchievementTrackerService/login" modelAttribute="userCredentials">
 		    <div class="input-group" >
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> Email address:</span>
 				<form:input path="emailId" type="text" class="form-control" name="email" placeholder="Email"/>

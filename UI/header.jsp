@@ -8,11 +8,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style>
-	.jumbotron {
-	    background-color: #515A3E; /* Orange */
-	    color: #ffffff;
-	    text-align: center;
-	}
+ 	.container {
+ 		display: block;
+ 	}
 	ul {
 		list-style-type: none;
 		margin: 0;
@@ -45,17 +43,15 @@
  	}
 </style>
 </head>
-<body>
-	<div class="jumbotron">
-		<h2>Achievement Tracker Service</h2>
-	</div>
-	<div class="col-md-12">
+<body>	
+	<div class="col-md-12 container">
 		<ul>
-			<li><a href="mainPage.jsp">Main</a></li>
-			<li><a href="EnterAchievement.jsp">Enter Achievement</a></li>
-			<li><a href="ListAchievement_Pending.jsp">List Achievements (Pending Approval)</a></li>
-			<li><a href="ListAchievement_Employees.jsp">List Achievements (My Employees)</a></li>
-			<li style="float:right"><a href="#">Log Out</a></li>
+			<li><a href="mainPage">Main</a></li>
+			<li><a href="showEnterAchievement">Enter Achievement</a></li>
+			<li><a href="#">List Achievements (Pending Approval)</a></li>
+			<li><a href="#">List Achievements (My Employees)</a></li>
+			<li style="float:right"><a href="login">Log Out</a></li>
+			<li style="float:right"><a>Hello, ${userCredentials.emailId}</a></li>
 		</ul>
 	</div>
 </body>
