@@ -114,6 +114,19 @@ public class UserController{
 			ec.setEmpToApprove2(userManagementBO.findUserByActiveFlag("N"));
 			ec.convertEmpToApprove2();
 			empToApproveForm.setEmpToApprove(ec.getEmpToApprove());
+			
+			//GET managers
+			ec.convertEmpToApprove();
+			empToApproveForm.setMgr(new ArrayList<EmployeeVO>());
+			
+			for(EmployeeVO emp:ec.getEmpToApprove2()){
+				try {
+					empToApproveForm.getMgr().add(employeeManagementBO.findEmployeesByID(emp.getManagerId()));
+				} catch (AchievementTrackerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			}
 
 		} catch (AchievementTrackerException e) {
 			// TODO Auto-generated catch block
@@ -148,6 +161,18 @@ public class UserController{
 			ec.setEmpToApprove2(userManagementBO.findUserByActiveFlag("N"));
 			ec.convertEmpToApprove2();
 			empToApproveForm.setEmpToApprove(ec.getEmpToApprove());
+			
+			//GET managers
+			ec.convertEmpToApprove();
+			empToApproveForm.setMgr(new ArrayList<EmployeeVO>());	
+			for(EmployeeVO emp:ec.getEmpToApprove2()){			
+					try {			
+						empToApproveForm.getMgr().add(employeeManagementBO.findEmployeesByID(emp.getManagerId()));
+					} catch (AchievementTrackerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+			}		
 		} catch (AchievementTrackerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
