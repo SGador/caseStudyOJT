@@ -93,10 +93,40 @@
 									<td style="width:20%">${row.emailID}
 										<form:hidden path="empToApprove[${status.index}].emailID" value="${row.emailID}"/>
 									</td>
-									<td style="width:20%"><a href="/AchievementTrackerService/showMgrDetails">${row.managerId}</a>
+									<td style="width:20%">
+									
+										<a onclick="showMgrDetail${status.index}()">${row.managerId}</a>
 										<form:hidden path="empToApprove[${status.index}].managerId" value="${row.managerId}"/>
+										
+										<c:set var="Name" value="${empToApproveForm.mgr[status.index].firstName}"/>
+										<script type="text/javascript">
+											function showMgrDetail${status.index}(){
+											alert('Manager Details: \n'+
+											
+												'\nID: ${empToApproveForm.mgr[status.index].employeeId}\n' +
+												'\nName: ${empToApproveForm.mgr[status.index].firstName}' +
+												' ${empToApproveForm.mgr[status.index].lastName}' +
+												'\nEmail: ${empToApproveForm.mgr[status.index].emailID}\n' +
+												'...');
+											}
+										</script>
+										
 									</td>
-									<td style="width:10%;text-align:center;"><a href="/AchievementTrackerService/showProjects">Projects</a></td>
+									
+									<td style="width:10%;text-align:center;">
+										<a onclick="showProjects${status.index}()">Projects</a>
+										<script type="text/javascript">
+											function showProjects${status.index}(){
+											alert('Projects: \n'+
+											<c:forEach var="proj" items="${row.projects}" varStatus="stat">
+												'\nProj. ID: ${proj.projectID}\n' +
+												'Proj. Name: ${proj.projectName}\n'+
+												'Proj. Mgr.: ${proj.managerID}\n' +
+											</c:forEach>
+												'...');
+											}
+										</script>
+									</td>
 									<td style="width:5%;text-align:center;"><form:checkbox path="empToApprove[${status.index}].checkControl"/></td>
 								</tr>
 							</c:forEach>
