@@ -10,7 +10,16 @@ import com.ibm.achievement.entity.EmployeeVO;
 public class EmpToApproveForm {
 	//private List<EmployeeVO> empToApprove;
 	private List<EmployeeVOChkBox> empToApprove;
+	private List<EmployeeVO> mgr;
 	//private List<EmployeeVO> empToApprove2;
+
+	public List<EmployeeVO> getMgr() {
+		return mgr;
+	}
+
+	public void setMgr(List<EmployeeVO> mgr) {
+		this.mgr = mgr;
+	}
 
 	public List<EmployeeVOChkBox> getEmpToApprove() {
 		return empToApprove;
