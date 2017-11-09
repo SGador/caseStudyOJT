@@ -5,7 +5,7 @@ banga
 <<<<<<< HEAD
 i love ibm
 =======
-pakyu mo tanan
+
 
 
 
